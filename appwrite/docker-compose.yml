@@ -1,3 +1,4 @@
+version:  '2.3'
 x-logging: &x-logging
   logging:
     driver: 'json-file'
