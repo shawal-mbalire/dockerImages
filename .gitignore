@@ -1,3 +1,7 @@
+./graphana_data
+./postgres_data
+./grafana/grafana_data
+./grafana/postgres_data
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
