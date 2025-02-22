@@ -1,6 +1,7 @@
 services:
-  postgres:
+  database:
     image: postgres:15
+    privileged: true
     container_name: postgres
     restart: always
     environment:
@@ -9,11 +10,14 @@ services:
       POSTGRES_DB: haraka_data
     ports:
       - "5432:5432"
-    volumes:
-      - ./postgres_data:/var/lib/postgresql/data
+    # volumes:
+      # - ./postgres_data:/var/lib/postgresql/data
+    networks:
+      - haraka_network
 
   grafana:
     image: grafana/grafana-oss:latest
+    privileged: true
     container_name: grafana
     restart: always
     ports:
@@ -21,5 +25,15 @@ services:
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
-    volumes:
-      - ./grafana_data:/var/lib/grafana
+    # volumes:
+      # - ./grafana_data:/var/lib/grafana
+    networks:
+      - haraka_network
+    depends_on:
+      database: # condition end
+        condition: service_started
+
+
+networks:
+  haraka_network:
+    driver: bridge
